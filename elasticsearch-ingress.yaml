@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: elasticsearch
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+    - elasticsearch.domain.com
+    secretName: elasticsearch-tls-secret
+  rules:
+    - host: elasticsearch.domain.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: elasticsearch-master
+            servicePort: 9200
